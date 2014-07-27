@@ -135,7 +135,7 @@ Test labels - 'test/y_test.txt'
 * The tidy data set includes 180 (=30*6) observations of 30 subjects' 6 activities.Each subject has 6 activities. Each activity has 66 features as following shows.
 
 ```r
-"names(tidy_data)" 
+"names(tidyData)" 
 
 [1] "Activity" "SubjectID" "tBodyAccMeanX" "tBodyAccMeanY" "tBodyAccMeanZ" "tBodyAccStdX"
 [7] "tBodyAccStdY" "tBodyAccStdZ" "tGravityAccMeanX" "tGravityAccMeanY" "tGravityAccMeanZ" "tGravityAccStdX"
@@ -154,7 +154,7 @@ Then we transform these column name to readable name
 
 
 ```r
-names(tidydata)
+names(tidyData)
  [1] "Activity"                                "Subject.ID"                             
  [3] "tBodyAccelerometerMeanX"                 "tBodyAccelerometerMeanY"                
  [5] "tBodyAccelerometerMeanZ"                 "tBodyAccelerometerStdX"                 
