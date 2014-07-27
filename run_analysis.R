@@ -1,32 +1,33 @@
+# download the data and save it into the data folder
 
-
-fileUrl = "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
 if (!file.exists("./data")) {dir.create("./data")}
-download.file(fileUrl, destfile = "./data/UCI.zip", method = "curl")
-
-unzip
+if (!file.exists("./data/UCI.zip")) {
+        download.file(fileUrl, destfile = "./data/UCI.zip", method = "curl")
+}
+unzip("./data/UCI.zip", exdir = "/data")
 
 # Step1: Merges the training and the test sets to create one dataset.
 
 # Reading subjects
 
-subjectTest <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names = c("SubjectID"))
-subjectTrain <- read.table("UCI HAR Dataset/train/subject_train.txt", col.names = c("SubjectID"))
+subjectTest <- read.table("data/UCI HAR Dataset/test/subject_test.txt", col.names = c("SubjectID"))
+subjectTrain <- read.table("data/UCI HAR Dataset/train/subject_train.txt", col.names = c("SubjectID"))
 
 # Reading labels
 
-yTest <- read.table("UCI HAR Dataset/test/y_test.txt", col.names = c("Activity"))
-yTrain <- read.table("UCI HAR Dataset/train/y_train.txt", col.names = c("Activity"))
+yTest <- read.table("data/UCI HAR Dataset/test/y_test.txt", col.names = c("Activity"))
+yTrain <- read.table("data/UCI HAR Dataset/train/y_train.txt", col.names = c("Activity"))
 
 # Reading features
 
-features <- read.table("UCI HAR Dataset/features.txt", col.names = c("FeatureID","Featurenames"))
+features <- read.table("data/UCI HAR Dataset/features.txt", col.names = c("FeatureID","Featurenames"))
 
 # Reading dataset
 
-xTest <- read.table("UCI HAR Dataset/test/X_test.txt", col.names = features$Featurenames)
-xTrain <- read.table("UCI HAR Dataset/train/X_train.txt", col.names = features$Featurenames)
+xTest <- read.table("data/UCI HAR Dataset/test/X_test.txt", col.names = features$Featurenames)
+xTrain <- read.table("data/UCI HAR Dataset/train/X_train.txt", col.names = features$Featurenames)
 
 
 
@@ -57,7 +58,7 @@ xData <- rbind(xTest, xTrain)
 
 # Step3: Uses descriptive activity names to name the activities in the dataset.
 
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", col.names = c("Activity", "ActivityName"))
+activityLabels <- read.table("data/UCI HAR Dataset/activity_labels.txt", col.names = c("Activity", "ActivityName"))
 
 activityLabels$ActivityName <- as.factor(activityLabels$ActivityName)
 
@@ -84,3 +85,5 @@ colnames(xData) <- columnNames
 library(reshape2)
 meltData <- melt(xData, id.vars = c("Activity", "SubjectID"))
 tidyData <- dcast(meltData, Activity + SubjectID ~ variable, mean)
+
+write.table(tidyData, "tidyData.txt", row.names = FALSE)
