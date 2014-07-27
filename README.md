@@ -1,8 +1,8 @@
-# Code Book for Human Activity Recognition Using Smartphones Dataset
+# Human Activity Recognition Using Smartphones Dataset
 
-This code book describes the variables, the data, and  transformations or work that we performed to clean up the data. 
+The goal of this run_analysis.R is to prepare tidy data from UCI website that can be used for later analysis. 
 
-Data can be downloaded by url https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
+One of the most exciting areas in all of data science right now is wearable computing - see for example this article . Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
 ## Human Activity Recognition Using Smartphones Dataset
 
@@ -19,175 +19,127 @@ For each record it is provided:
 - Its activity label. 
 - An identifier of the subject who carried out the experiment.
 
+The detail of data can be found in CodeBook.md.
 
-## The dataset includes the following files:
+Here are the data for the project:
 
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-- 'README.txt'
+## The script  run_analysis.R that does the following. 
 
-- 'features_info.txt': Shows information about the variables used on the feature vector.
-
-- 'features.txt': List of all features.
-
-- 'activity_labels.txt': Links the class labels with their activity name.
-
-- 'train/X_train.txt': Training set.
-
-- 'train/y_train.txt': Training labels.
-
-- 'test/X_test.txt': Test set.
-
-- 'test/y_test.txt': Test labels.
-
-### The following files are available for the train and test data. Their descriptions are equivalent. 
-
-- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
-
-- 'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
-
-- 'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
-
-- 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
-
-
-## Feature Selection 
-
-
-The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
-
-Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
-
-Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
-
-These signals were used to estimate variables of the feature vector for each pattern:  
-'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
-
-tBodyAcc-XYZ
-tGravityAcc-XYZ
-tBodyAccJerk-XYZ
-tBodyGyro-XYZ
-tBodyGyroJerk-XYZ
-tBodyAccMag
-tGravityAccMag
-tBodyAccJerkMag
-tBodyGyroMag
-tBodyGyroJerkMag
-fBodyAcc-XYZ
-fBodyAccJerk-XYZ
-fBodyGyro-XYZ
-fBodyAccMag
-fBodyAccJerkMag
-fBodyGyroMag
-fBodyGyroJerkMag
-
-The set of variables that were estimated from these signals are: 
-
-mean(): Mean value
-std(): Standard deviation
-mad(): Median absolute deviation 
-max(): Largest value in array
-min(): Smallest value in array
-sma(): Signal magnitude area
-energy(): Energy measure. Sum of the squares divided by the number of values. 
-iqr(): Interquartile range 
-entropy(): Signal entropy
-arCoeff(): Autorregresion coefficients with Burg order equal to 4
-correlation(): correlation coefficient between two signals
-maxInds(): index of the frequency component with largest magnitude
-meanFreq(): Weighted average of the frequency components to obtain a mean frequency
-skewness(): skewness of the frequency domain signal 
-kurtosis(): kurtosis of the frequency domain signal 
-bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
-angle(): Angle between to vectors.
-
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
-
-gravityMean
-tBodyAccMean
-tBodyAccJerkMean
-tBodyGyroMean
-tBodyGyroJerkMean
-
-
-## For this project, we only use:
-
-Training data set - 'train/X_train.txt'
-Test data set - 'test/X_test.txt'
-Training labels - 'train/y_train.txt'
-Test labels - 'test/y_test.txt'
-
-* Two files with row identifies the subject who performed the activity for each window sample in range from 1 to 30. 
-- 'train/subject_train.txt'
-- 'test/subject_test.txt'
-
-* Activity: factor with 6 levels, in order: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING, indicated the activity being performed at the moment of data gathering,
-
-* SubjectID: numeric value from 1 to 30 indicating the subject Id.
-
-### For variables 3 to 68 the variable is numeric and the name indicates:
-
-* Acc and Gyro: data origin, accelerometer and gyroscope, respectively.
-* -XYZ: the three dimensional axis, X,Y, or Z, respectively (3-axial)
-* Body and Gravity: Acceleration signal source, Body or Gravity, determined using low pass Butter worth filter with a corner frequency of 0.3 Hz.
-* Mean and Std: Mean value or Standard deviation, respectively.
-* t of f: t denotes time domain signals, these were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butter worth filter with a corner frequency of 20 Hz to remove noise. On the other hand, f denotes the use of a Fast Fourier Transform (FFT) was applied.
-
-* The tidy data set includes 180 (=30*6) observations of 30 subjects' 6 activities.Each subject has 6 activities. Each activity has 66 features as following shows.
+    1. Merges the training and the test sets to create one data set.
+    2. Extracts only the measurements on the mean and standard deviation for each measurement. 
+    3. Uses descriptive activity names to name the activities in the data set
+    4. Appropriately labels the data set with descriptive activity names. 
+    5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 ```r
-"names(tidy_data)" 
+## Load the required package
+library(reshape2)
 
-[1] "Activity" "SubjectID" "tBodyAccMeanX" "tBodyAccMeanY" "tBodyAccMeanZ" "tBodyAccStdX"
-[7] "tBodyAccStdY" "tBodyAccStdZ" "tGravityAccMeanX" "tGravityAccMeanY" "tGravityAccMeanZ" "tGravityAccStdX"
-[13] "tGravityAccStdY" "tGravityAccStdZ" "tBodyAccJerkMeanX" "tBodyAccJerkMeanY" "tBodyAccJerkMeanZ" "tBodyAccJerkStdX"
-[19] "tBodyAccJerkStdY" "tBodyAccJerkStdZ" "tBodyGyroMeanX" "tBodyGyroMeanY" "tBodyGyroMeanZ" "tBodyGyroStdX"
-[25] "tBodyGyroStdY" "tBodyGyroStdZ" "tBodyGyroJerkMeanX" "tBodyGyroJerkMeanY" "tBodyGyroJerkMeanZ" "tBodyGyroJerkStdX"
-[31] "tBodyGyroJerkStdY" "tBodyGyroJerkStdZ" "tBodyAccMagMean" "tBodyAccMagStd" "tGravityAccMagMean" "tGravityAccMagStd"
-[37] "tBodyAccJerkMagMean" "tBodyAccJerkMagStd" "tBodyGyroMagMean" "tBodyGyroMagStd" "tBodyGyroJerkMagMean" "tBodyGyroJerkMagStd"
-[43] "fBodyAccMeanX" "fBodyAccMeanY" "fBodyAccMeanZ" "fBodyAccStdX" "fBodyAccStdY" "fBodyAccStdZ"
-[49] "fBodyAccJerkMeanX" "fBodyAccJerkMeanY" "fBodyAccJerkMeanZ" "fBodyAccJerkStdX" "fBodyAccJerkStdY" "fBodyAccJerkStdZ"
-[55] "fBodyGyroMeanX" "fBodyGyroMeanY" "fBodyGyroMeanZ" "fBodyGyroStdX" "fBodyGyroStdY" "fBodyGyroStdZ"
-[61] "fBodyAccMagMean" "fBodyAccMagStd" "fBodyBodyAccJerkMagMean" "fBodyBodyAccJerkMagStd" "fBodyBodyGyroMagMean" "fBodyBodyGyroMagStd"
-[67] "fBodyBodyGyroJerkMagMean" "fBodyBodyGyroJerkMagStd" 
-```
-Then we transform these column name to readable name
+# download the data and save it into the data subfolder
+require("R.utils")
+
+if(!file.exists("./data")){dir.create("./data")}
+# download file
+Url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+if(!file.exists("./data/UCI.zip")){download.file(Url, destfile = "./data/UCI.zip")}
+# unzip file
+unzip("./data/UCI.zip",exdir = "./data" )
+
+# Reading subjects
+
+subject.test <- read.table("data/UCI HAR Dataset/test/subject_test.txt", header=FALSE, col.names=c("Subject.ID"))
+subject.train <- read.table("data/UCI HAR Dataset/train/subject_train.txt", header=FALSE, col.names=c("Subject.ID"))
+str(subject.test)
+summary(subject.test)
+table(subject.test)
+table(subject.train)
+
+# Reading labels
+y.test <- read.table("data/UCI HAR Dataset/test/y_test.txt", header=FALSE, col.names=c("Activity"))
+y.train <- read.table("data/UCI HAR Dataset/train/y_train.txt", header=FALSE, col.names=c("Activity"))
+str(y.test)
+head(y.test)
 
 
-```r
-names(tidydata)
- [1] "Activity"                                "Subject.ID"                             
- [3] "tBodyAccelerometerMeanX"                 "tBodyAccelerometerMeanY"                
- [5] "tBodyAccelerometerMeanZ"                 "tBodyAccelerometerStdX"                 
- [7] "tBodyAccelerometerStdY"                  "tBodyAccelerometerStdZ"                 
- [9] "tGravityAccelerometerMeanX"              "tGravityAccelerometerMeanY"             
-[11] "tGravityAccelerometerMeanZ"              "tGravityAccelerometerStdX"              
-[13] "tGravityAccelerometerStdY"               "tGravityAccelerometerStdZ"              
-[15] "tBodyAccelerometerJerkMeanX"             "tBodyAccelerometerJerkMeanY"            
-[17] "tBodyAccelerometerJerkMeanZ"             "tBodyAccelerometerJerkStdX"             
-[19] "tBodyAccelerometerJerkStdY"              "tBodyAccelerometerJerkStdZ"             
-[21] "tBodyGyroscopeMeanX"                     "tBodyGyroscopeMeanY"                    
-[23] "tBodyGyroscopeMeanZ"                     "tBodyGyroscopeStdX"                     
-[25] "tBodyGyroscopeStdY"                      "tBodyGyroscopeStdZ"                     
-[27] "tBodyGyroscopeJerkMeanX"                 "tBodyGyroscopeJerkMeanY"                
-[29] "tBodyGyroscopeJerkMeanZ"                 "tBodyGyroscopeJerkStdX"                 
-[31] "tBodyGyroscopeJerkStdY"                  "tBodyGyroscopeJerkStdZ"                 
-[33] "tBodyAccelerometerMagnitudeMean"         "tBodyAccelerometerMagnitudeStd"         
-[35] "tGravityAccelerometerMagnitudeMean"      "tGravityAccelerometerMagnitudeStd"      
-[37] "tBodyAccelerometerJerkMagnitudeMean"     "tBodyAccelerometerJerkMagnitudeStd"     
-[39] "tBodyGyroscopeMagnitudeMean"             "tBodyGyroscopeMagnitudeStd"             
-[41] "tBodyGyroscopeJerkMagnitudeMean"         "tBodyGyroscopeJerkMagnitudeStd"         
-[43] "fBodyAccelerometerMeanX"                 "fBodyAccelerometerMeanY"                
-[45] "fBodyAccelerometerMeanZ"                 "fBodyAccelerometerStdX"                 
-[47] "fBodyAccelerometerStdY"                  "fBodyAccelerometerStdZ"                 
-[49] "fBodyAccelerometerJerkMeanX"             "fBodyAccelerometerJerkMeanY"            
-[51] "fBodyAccelerometerJerkMeanZ"             "fBodyAccelerometerJerkStdX"             
-[53] "fBodyAccelerometerJerkStdY"              "fBodyAccelerometerJerkStdZ"             
-[55] "fBodyGyroscopeMeanX"                     "fBodyGyroscopeMeanY"                    
-[57] "fBodyGyroscopeMeanZ"                     "fBodyGyroscopeStdX"                     
-[59] "fBodyGyroscopeStdY"                      "fBodyGyroscopeStdZ"                     
-[61] "fBodyAccelerometerMagnitudeMean"         "fBodyAccelerometerMagnitudeStd"         
-[63] "fBodyBodyAccelerometerJerkMagnitudeMean" "fBodyBodyAccelerometerJerkMagnitudeStd" 
-[65] "fBodyBodyGyroscopeMagnitudeMean"         "fBodyBodyGyroscopeMagnitudeStd"         
-[67] "fBodyBodyGyroscopeJerkMagnitudeMean"     "fBodyBodyGyroscopeJerkMagnitudeStd"  
+# Reading features
+features <- read.table("data/UCI HAR Dataset/features.txt", header=FALSE, as.is=TRUE, col.names=c("Featire.ID", "Featire.Name"))
+str(features)
+
+
+# Reading data set and label the X. file variable (column) names. This takes time.
+X.test <- read.table("data/UCI HAR Dataset/test/X_test.txt", header=FALSE, sep="", col.names=features$Featire.Name)
+X.train <- read.table("data/UCI HAR Dataset/train/X_train.txt", header=FALSE, sep="", col.names=features$Featire.Name)
+str(X.train)
+summary(X.test)
+
+# X. files have 561 variables whose column names are in the "feature" second column.
+
+
+# 2. Extracts only the measurements on the mean and standard deviation for each measurement. (Before mergering, subset the dataset and save time and space.) )
+
+# Getting indexes of measurement names with std() and mean()
+mean.std.index <- grep(".*mean\\(\\)|.*std\\(\\)", features$Featire.Name)
+# 66 variable related to mean and std.
+str(mean.std.index)
+# Getting data by indexes. now X. file only have 66 variables which .
+X.test <- X.test[, mean.std.index]
+X.train <- X.train[, mean.std.index]
+head(X.test)
+
+# Setting subjects and labels to data set: 2947 test observation; 7352 train observation
+X.test$Subject.ID <- subject.test$Subject.ID
+X.train$Subject.ID <- subject.train$Subject.ID
+
+# Setting activity and labels to data set: 2947 test observation; 7352 train observation
+X.test$Activity <- y.test$Activity
+X.train$Activity <- y.train$Activity
+
+
+# 1. Merges the training and the test sets to create one data set.
+# 66 measurement varaibles and subject.ID and Activity factor.
+X.data <- rbind(X.test, X.train)
+names(X.data)
+head(X.data)
+
+# 3. Uses descriptive activity names to name the activities in the data set
+activity.labels <- read.table("data/UCI HAR Dataset/activity_labels.txt", header=F, col.names=c("Activity", "Activity.Name"))
+# There are 6 activity, first three are active, and later three are still.
+# WALKING; WALKING_UPSTAIRS; WALKING_DOWNSTAIRS; SITTING; STANDING; LAYING   
+activity.labels
+# factor
+activity.labels$Activity.Name <- as.factor(activity.labels$Activity.Name)
+
+# 4. Appropriately labels the data set with descriptive activity names: 
+# WALKING; WALKING_UPSTAIRS; WALKING_DOWNSTAIRS; SITTING; STANDING; LAYING            
+X.data$Activity <- factor(X.data$Activity, levels = 1:6, labels = activity.labels$Activity.Name)
+head(X.data)
+names(X.data)
+# Transform all the column name to readable name. Shorten the variable name for easy reading; appropriately labels the data set with readable name
+column.names <- colnames(X.data)
+# Get rid of the .
+column.names <- gsub("\\.+mean\\.+", column.names, replacement="Mean")
+column.names <- gsub("\\.+std\\.+", column.names, replacement="Std")
+# Give short name a full explaination
+column.names <- gsub("Mag", column.names, replacement="Magnitude")
+column.names <- gsub("Acc", column.names, replacement="Accelerometer")
+column.names <- gsub("Gyro", column.names, replacement="Gyroscope")
+column.names
+# Put back to X. file
+colnames(X.data) <- column.names
+
+# 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject
+library(reshape2)
+meltdata <- melt(X.data, id.vars = c("Activity", "Subject.ID"))
+tidydata <- dcast(meltdata, Activity + Subject.ID ~ variable, mean)
+head(meltdata)
+# Get 180 (=30*6) observations of 30 subjects' 6 activities.
+# Each subject has 6 activities. Each activity has 66 features.
+head(tidydata)
+table(tidydata$Subject.ID)
+# 5.1 Save tidy data set
+write.table(tidydata, "tidydata.txt", row.names = FALSE)
+
 
 ```
